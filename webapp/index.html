@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>API Data Table</title>
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>Customer ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Amount</th>
+                <th>Percentage</th>
+                <th>Salary</th>
+            </tr>
+        </thead>
+        <tbody id="table-body">
+            <!-- Table rows will be populated here -->
+        </tbody>
+    </table>
+
+    <script>
+        // Fetch data from the API
+        fetch('http://localhost:5000/api/customers')
+            .then(response => response.json())
+            .then(data => {
+                // Manipulate the DOM to display the fetched data
+                const tableBody = document.getElementById('table-body');
+
+                // Populate the table with JSON data
+                data.forEach(data => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${data.cust_id}</td>
+                        <td>${data.firstname}</td>
+                        <td>${data.lastname}</td>
+                        <td>${data.amount}</td>
+                        <td>${data.percentage}</td>
+                        <td>${data.salary}</td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+    </script>
+</body>
+</html>
+
+
+
+
