@@ -19,7 +19,7 @@ def test_table_data_matches_json(driver):
     ]
 
     # Open the URL
-    url = "http://localhost:8000"  # Update with your actual URL
+    url = "http://localhost:8000"
     driver.get(url)
 
     # Find the table element
