@@ -4,13 +4,14 @@ from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 
 @pytest.fixture
-def driver():
+def driver_fixture():
+    chrome_options = Options()
     # Initialize the WebDriver
-    driver = webdriver.Chrome(ChromeDriverManager().install())
+    driver = webdriver.Chrome(service=Service (ChromeDriverManager().install()), options=chrome_options)
     yield driver
     driver.quit()
 
-def test_table_data_matches_json(driver):
+def test_table_data_matches_json(driver_fixture):
     # Load JSON data from the provided data
     json_data = [
         {"amount": 100, "cust_id": 1, "firstname": "John", "lastname": "Doe", "percentage": 0.03, "salary": 3333},
@@ -20,10 +21,10 @@ def test_table_data_matches_json(driver):
 
     # Open the URL
     url = "http://localhost:8000"
-    driver.get(url)
+    driver_fixture.get(url)
 
     # Find the table element
-    table = driver.find_element_by_tag_name('table')
+    table = driver_fixture.find_element_by_tag_name('table')
 
     # Find all table rows
     rows = table.find_elements_by_tag_name('tr')[1:]  # Exclude header row
